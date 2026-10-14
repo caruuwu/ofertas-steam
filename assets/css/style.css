@@ -1,0 +1,78 @@
+[data-bs-theme="dark"] {
+    --bs-body-bg: #101822;
+    --bs-body-color: #e7edf5;
+    --bs-secondary-color: #b2c2d3;
+    --bs-border-color: #40556c;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #101822;
+    background-image:
+        radial-gradient(ellipse at top, rgb(53 104 143 / 24%), transparent 65%),
+        linear-gradient(45deg, transparent 48%, rgb(102 192 244 / 3%) 49%, rgb(102 192 244 / 3%) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgb(102 192 244 / 3%) 49%, rgb(102 192 244 / 3%) 51%, transparent 52%);
+    background-size: auto, 48px 48px, 48px 48px;
+}
+
+header {
+    background: linear-gradient(135deg, #111b28, #203b53, #142231);
+    box-shadow: 0 8px 24px #0003;
+}
+
+.controles { background: #1b2b3d; }
+
+.form-control, .form-select { background-color: #101b28; }
+
+.moneda-btn img { object-fit: contain; }
+
+.moneda-btn[aria-pressed="true"] {
+    color: #fff;
+    background: #244b66;
+    border-color: #66c0f4;
+}
+
+.juego-card {
+    overflow: hidden;
+    background: linear-gradient(145deg, #22354a, #182635);
+    transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+
+.juego-card .card-img-top, .imagen-vacia {
+    aspect-ratio: 460 / 215;
+    background: #0d1520;
+}
+
+.juego-card .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.juego-card .card-title, .precios strong { overflow-wrap: anywhere; }
+.precios strong { color: #beeb78; }
+
+.juego-card .text-bg-success {
+    color: #d7ff9a !important;
+    background-color: #3e571a !important;
+}
+
+.juego-card .text-bg-secondary {
+    color: #d6e1ec !important;
+    background-color: #32465a !important;
+}
+
+.juego-card:hover {
+    border-color: #66c0f4;
+    box-shadow: 0 14px 32px #0005;
+}
+
+.descuento:empty, #cargarMas[hidden] { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+    .juego-card:hover { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .juego-card { transition: none; }
+}
