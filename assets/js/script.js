@@ -1,5 +1,3 @@
-// ===== URLS DE CADA OPCIÓN =====
-
 const URL_OFERTAS = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=60";
 const URL_BUSQUEDA = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=0&pageSize=60";
 const URL_PRECIO_5 = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=60&upperPrice=5";
@@ -81,8 +79,6 @@ function mostrarEstado(texto = mensaje) {
     );
 }
 
-// ===== CONSULTAS A LAS APIS =====
-
 function urlOfertas() {
     const url = new URL(termino ? URL_BUSQUEDA : URL_OFERTAS);
     let urlPrecio;
@@ -120,7 +116,6 @@ function urlOfertas() {
 }
 
 async function consultarChile(lista) {
-    // Solo evita consultar IDs repetidos o ya guardados.
     const ids = [...new Set(lista.map(appID))]
         .filter(id => id && !cacheChile.has(id));
 
@@ -152,7 +147,6 @@ async function consultarChile(lista) {
     return fallo;
 }
 
-// Una sola función obtiene el precio para tarjetas y carrito.
 function precioJuego(juego) {
     const chile = moneda.value === "CLP";
     const regional = cacheChile.get(appID(juego));
@@ -164,8 +158,6 @@ function precioJuego(juego) {
 
         const numero = Number(valor);
         if (!Number.isFinite(numero) || numero < 0) return null;
-
-        // Todos los importes se guardan como enteros en centésimas.
         return Math.round(chile ? numero : numero * 100);
     }
 
@@ -181,7 +173,6 @@ function precioJuego(juego) {
 function dinero(importe) {
     return formatos[moneda.value].format(importe / 100);
 }
-// ===== TARJETAS =====
 
 function tarjeta(juego, indice) {
     const titulo = escapar(juego.title);
@@ -357,7 +348,6 @@ function pintarCarrito() {
         }
     });
 }
-// ===== CARGA Y PAGINACIÓN =====
 
 async function cargar(reiniciar = false) {
     if (!reiniciar && (cargando || !hayMas)) return;
@@ -430,8 +420,6 @@ async function cargar(reiniciar = false) {
     }
 }
 
-// ===== MONEDA =====
-
 function actualizarMoneda() {
     $("#notaMoneda").textContent = (
         moneda.value === "CLP"
@@ -449,8 +437,6 @@ function actualizarMoneda() {
     mostrarEstado();
     pintar();
 }
-
-// ===== EVENTOS =====
 
 $("#busquedaForm").addEventListener("submit", evento => {
     evento.preventDefault();
