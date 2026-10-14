@@ -1,3 +1,4 @@
+// URLs de la API y filtros
 const URL_OFERTAS = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=60";
 const URL_BUSQUEDA = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=0&pageSize=60";
 const URL_PRECIO_5 = "https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=60&upperPrice=5";
@@ -11,6 +12,7 @@ const URL_STEAM_CHILE = "https://store.steampowered.com/api/appdetails?cc=cl&l=s
 const URL_PROXY = "https://proxy.cors.dev/";
 const URL_TIENDA = "https://store.steampowered.com";
 
+// Límite de tamaño y carga
 const TAMANO_PAGINA = 60;
 const TAMANO_LOTE = 15;
 
@@ -23,8 +25,9 @@ const orden = $("#ordenJuegos");
 const moneda = $("#moneda");
 const mas = $("#cargarMas");
 const banderas = document.querySelectorAll(".moneda-btn");
-
+// Guarda precios regionales, para no repetir solicitudes
 const cacheChile = new Map();
+// Para guardar precio de los juegos en el carrito
 const carrito = new Map();
 
 const formatos = {
@@ -45,6 +48,7 @@ let hayMas = true;
 let falloChile = false;
 let mensaje = "";
 
+// Transforma caracteres especiales para agregarlos en la URL
 function escapar(valor) {
     const entidades = {
         "&": "&amp;", "<": "&lt;", ">": "&gt;",
@@ -55,21 +59,25 @@ function escapar(valor) {
     );
 }
 
+// Obtiene el identificador de juego de Steam
 function appID(juego) {
     const id = String(juego.steamAppID ?? "");
     return /^\d+$/.test(id) && id !== "0" ? id : "";
 }
 
+// Obtiene una clave para que no se repita el mismo juego
 function clave(juego) {
     return appID(juego) || juego.gameID || juego.dealID || juego.title;
 }
 
+// Para solicitar datos a la API, los devuelve como un archivo .json
 async function getJSON(url) {
     const respuesta = await fetch(url, { credentials: "omit" });
     if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
     return respuesta.json();
 }
 
+// Muestra el estado de la página y da una aviso cuando corresponde
 function mostrarEstado(texto = mensaje) {
     mensaje = texto;
     estado.textContent = texto + (
@@ -79,6 +87,7 @@ function mostrarEstado(texto = mensaje) {
     );
 }
 
+// Se combinan las consultas a la API para generar los filtros mixtos
 function urlOfertas() {
     const url = new URL(termino ? URL_BUSQUEDA : URL_OFERTAS);
     let urlPrecio;
@@ -115,6 +124,7 @@ function urlOfertas() {
     return url.href;
 }
 
+// Consulta precios regionales de Chile a Steam
 async function consultarChile(lista) {
     const ids = [...new Set(lista.map(appID))]
         .filter(id => id && !cacheChile.has(id));
@@ -147,6 +157,7 @@ async function consultarChile(lista) {
     return fallo;
 }
 
+// Selecciona precios de la misma API para dólar o de Steam para peso chileno
 function precioJuego(juego) {
     const chile = moneda.value === "CLP";
     const regional = cacheChile.get(appID(juego));
@@ -174,6 +185,7 @@ function dinero(importe) {
     return formatos[moneda.value].format(importe / 100);
 }
 
+// Para generar la tarjeta de cada juego, con ayuda de bootstrap
 function tarjeta(juego, indice) {
     const titulo = escapar(juego.title);
     const datos = precioJuego(juego);
@@ -256,6 +268,7 @@ function tarjeta(juego, indice) {
     `;
 }
 
+// Actualiza las tarjetas visibles junto con el carrito de compras
 function pintar() {
     seccion.innerHTML = juegos.map(tarjeta).join("");
     pintarCarrito();
@@ -349,6 +362,7 @@ function pintarCarrito() {
     });
 }
 
+// Para reiniciar el listado anterior y cargar nuevamente desde la API
 async function cargar(reiniciar = false) {
     if (!reiniciar && (cargando || !hayMas)) return;
 
@@ -444,6 +458,7 @@ $("#busquedaForm").addEventListener("submit", evento => {
     cargar(true);
 });
 
+// Boton de limpiar, para borrar la búsqueda y reiniciar el listado de la API base
 $("#limpiarBusqueda").addEventListener("click", () => {
     entrada.value = "";
     termino = "";
