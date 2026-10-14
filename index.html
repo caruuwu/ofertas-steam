@@ -10,6 +10,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
 </head>
 
+<!-- Encabezado, título y logo -->
 <body>
     <header class="py-4 border-bottom">
         <div class="container">
@@ -25,7 +26,7 @@
                         Busca juegos y revisa sus ofertas.
                     </p>
                 </div>
-
+<!-- Para elegir entre peso chileno o dólar -->
                 <div class="selector-moneda col-lg-2">
                     <span id="etiquetaMoneda" class="form-label d-block">
                         Moneda
@@ -55,6 +56,7 @@
         </div>
     </header>
 
+<!-- Barras de filtros y buscador -->
     <main class="container my-4">
         <section class="controles p-3 p-md-4 rounded-4 border shadow-sm mb-3" aria-label="Buscar y filtrar ofertas">
             <div class="row g-3 align-items-end">
@@ -97,6 +99,7 @@
             </div>
         </section>
 
+<!-- Comentario que aparece antes de los juegos, abajo del buscador  -->
         <p id="notaMoneda" class="small text-body-secondary">
             CLP muestra los precios regionales de Steam Chile;
             USD muestra los precios de CheapShark.
@@ -114,11 +117,13 @@
             </div>
         </section>
 
+<!-- Botón al final de la página para cargar más juegos -->
         <div class="d-flex justify-content-center mt-4 mb-5">
             <button id="cargarMas" class="btn btn-outline-info px-4" type="button">Cargar más</button>
         </div>
     </main>
 
+<!-- Carrito de compras -->
     <button id="botonCarrito" type="button"
         class="btn btn-info position-fixed bottom-0 end-0 m-3 rounded-pill shadow d-none border border-2 border-white"
         data-bs-toggle="offcanvas" data-bs-target="#panelCarrito" aria-controls="panelCarrito"
@@ -157,6 +162,7 @@
         </div>
     </aside>
 
+<!-- Conexión a bootstrap y al js de la página -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="assets/js/script.js"></script>
